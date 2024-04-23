@@ -4,13 +4,25 @@
 	{
 		static void Main(string[] args)
 		{
-			Console.WriteLine("Enter a and b:");
-			int a = int.Parse(Console.ReadLine());
-			int b = int.Parse(Console.ReadLine());
+			int a, b;
+			do
+			{
+				Console.WriteLine("Enter two positive integers a and b:");
+				a = int.Parse(Console.ReadLine());
+				b = int.Parse(Console.ReadLine());
 
-			Console.WriteLine($"In range [{a}, {b}] with exactly two 'A's in duodecimal representation:");
+				if (a <= 0 || b <= 0)
+				{
+					Console.WriteLine("Both a and b must be positive integers. Please try again.");
+				}
+			} while (a <= 0 || b <= 0);
 
-			for (int i = a; i <= b; i++)
+
+			int start = Math.Min(a, b);
+			int end = Math.Max(a, b);
+			Console.WriteLine($"In range [{start}, {end}] with exactly two 'A's in duodecimal representation:");
+
+			for (int i = start; i <= end; i++)
 			{
 				if (CountAInDuodecimal(i) == 2)
 				{
