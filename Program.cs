@@ -17,11 +17,7 @@
 			{
 				total += int.Parse(isbn[i].ToString()) * (10 - i);
 			}
-<<<<<<< Updated upstream
-			int checkDigit = (total) % 11;
-=======
 			int checkDigit = (11 - (total) % 11) % 11;
->>>>>>> Stashed changes
 			return checkDigit == 10 ? 'X' : (char)(checkDigit + '0');
 		}
 	}
