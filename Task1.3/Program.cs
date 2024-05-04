@@ -7,7 +7,8 @@
 			Console.Write("Enter the number of elements in the array: ");
 			int n = int.Parse(Console.ReadLine());
 
-			int[] originalArray = new int[n];
+			int[] originalArray = new int[n];  
+
 
 			for (int i = 0; i < n; i++)
 			{
