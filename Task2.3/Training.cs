@@ -38,7 +38,7 @@ namespace Task2._3
 			Training training = new Training(5);
 			foreach (var lesson in Lessons)
 			{
-				training.Add(lesson);
+				training.Add((BaseLesson)lesson.Clone());
 			}
 			return training;
 		}
