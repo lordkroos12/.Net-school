@@ -32,6 +32,7 @@ namespace Task2._1
 
 		public bool IsZero()
 		{
+<<<<<<< Updated upstream
 			if (X == 0 && Y == 0 && Z == 0)
 			{
 				return true;
@@ -40,6 +41,9 @@ namespace Task2._1
 			{
 				return false;
 			}	
+=======
+			return X == 0 && Y == 0 && Z == 0;
+>>>>>>> Stashed changes
 		}
 
 		public double Distance(Point3D point)
