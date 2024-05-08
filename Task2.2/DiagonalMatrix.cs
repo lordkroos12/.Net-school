@@ -57,7 +57,6 @@ namespace Task2._2
 				}
 				return true;
 			}
-			else
 			return false;
 		}
 		public override string ToString()
