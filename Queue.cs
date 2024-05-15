@@ -1,8 +1,6 @@
-﻿
-
-namespace QueueImplementation
+﻿namespace QueueImplementation
 {
-	internal class Queue<T> : IQueue<T>,ICloneable
+	internal class Queue<T> : IQueue<T>, ICloneable where T: struct
 	{
 		private LinkedList<T> _queue = new LinkedList<T>();
 		public T Dequeue()
@@ -12,11 +10,9 @@ namespace QueueImplementation
 			{
 				throw new InvalidOperationException("The queue is empty!");
 			}
-			else
-			{
-				firstItem = _queue.First();
-				_queue.RemoveFirst();
-			}
+			firstItem = _queue.First();
+			_queue.RemoveFirst();
+
 			return firstItem;
 		}
 
@@ -32,10 +28,11 @@ namespace QueueImplementation
 		public object Clone()
 		{
 			Queue<T> clonedQueue = new Queue<T>();
-			foreach (var item in _queue)
+			foreach (T item in _queue)
 			{
 				clonedQueue.Enqueue(item);
 			}
+
 			return clonedQueue;
 		}
 	}
