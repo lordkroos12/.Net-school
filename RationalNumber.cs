@@ -1,34 +1,28 @@
 ﻿namespace Task4._2
 {
-	internal class RationalNumber :IComparable<RationalNumber>
+	internal class RationalNumber : IComparable<RationalNumber>
 	{
-        public int Numerator { get; private set; }
+		public int Numerator { get; private set; }
 		private int denominator;
-
 		public int Denominator
 		{
 			get { return denominator; }
-			private set {
-				if (value == 0)
+			private set
+			{
+				if (value <= 0)
 				{
 					throw new ArgumentException("Denominator must be different from 0!");
-				}	
-				denominator = value; 
+				}
+				denominator = value;
 			}
 		}
 
-
-		private RationalNumber(int n, int m)
-        {
-            this.Numerator = n;
-            this.Denominator = m;
+		public RationalNumber(int n, int m)
+		{
+			this.Numerator = n;
+			this.Denominator = m;
 			Rationalize();
-        }
-        public static RationalNumber getInstance(int n, int m)
-        {
-            return new RationalNumber(n,m);
-        }
-
+		}
 		private static int GCD(int a, int b)
 		{
 			while (a != 0 && b != 0)
@@ -43,10 +37,10 @@
 		}
 
 		public void Rationalize()
-		{ 
+		{
 			int divisor = GCD(Numerator, Denominator);
 			Numerator = Numerator / divisor;
-			Denominator = Denominator/ divisor;
+			Denominator = Denominator / divisor;
 		}
 
 		public override string ToString()
@@ -60,7 +54,7 @@
 				return false;
 			}
 			RationalNumber other = obj as RationalNumber;
-			return Numerator == other.Numerator && Denominator == other.Denominator;	
+			return Numerator == other.Numerator && Denominator == other.Denominator;
 		}
 		public override int GetHashCode()
 		{
@@ -69,9 +63,10 @@
 
 		public int CompareTo(RationalNumber? other)
 		{
-			double thisValue = (double)Numerator / Denominator;
-			double otherValue = (double)other.Numerator / other.Denominator;
-			return thisValue.CompareTo(otherValue);
+			int left = Numerator * other.Denominator;
+			int right = other.Numerator * Denominator;
+
+			return left.CompareTo(right);
 		}
 
 		public static RationalNumber operator +(RationalNumber a, RationalNumber b)
