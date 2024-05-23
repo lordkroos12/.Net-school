@@ -9,10 +9,6 @@
 			get { return denominator; }
 			private set
 			{
-				if (value <= 0)
-				{
-					throw new ArgumentException("Denominator must be different from 0!");
-				}
 				denominator = value;
 			}
 		}
@@ -21,6 +17,13 @@
 		{
 			this.Numerator = n;
 			this.Denominator = m;
+
+			if (Denominator < 0)
+			{
+				Numerator = -Numerator;
+				Denominator = -Denominator;
+			}
+
 			Rationalize();
 		}
 		private static int GCD(int a, int b)
