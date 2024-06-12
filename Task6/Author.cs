@@ -2,6 +2,7 @@
 {
 	public class Author
 	{
+		const int limit = 200;
 		private string firstName;
 
 		public string FirstName
@@ -9,9 +10,9 @@
 			get { return firstName; }
 			set
 			{
-				if (value.Length > 200)
+				if (value.Length > limit)
 				{
-					throw new ArgumentException("Length must be less than 200 symbols!");
+					throw new ArgumentException($"Length must be less than {limit} symbols!");
 				}
 				firstName = value;
 			}
@@ -23,9 +24,9 @@
 			get { return lastName; }
 			set
 			{
-				if (value.Length > 200)
+				if (value.Length > limit)
 				{
-					throw new ArgumentException("Length must be less than 200 symbols!");
+					throw new ArgumentException($"Length must be less than {limit} symbols!");
 				}
 				lastName = value;
 			}
@@ -41,6 +42,26 @@
         {
             
         }
+		public override bool Equals(object? obj)
+		{
+			return base.Equals(obj);
+		}
+		public override bool Equals(object obj)
+		{
+			if (obj is Author otherAuthor)
+			{
+				return this.FirstName == otherAuthor.FirstName &&
+					   this.LastName == otherAuthor.LastName &&
+					   this.DateOfBirth == otherAuthor.DateOfBirth;
+			}
+			return false;
+		}
 
-    }
+		public override int GetHashCode()
+		{
+			return FirstName.GetHashCode() ^
+				   LastName.GetHashCode() ^
+				   DateOfBirth.GetHashCode();
+		}
+	}
 }

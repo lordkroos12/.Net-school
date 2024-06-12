@@ -26,25 +26,53 @@ namespace Task6
 		public string Isbn
 		{
 			get { return isbn; }
-			set {
-                if (!IsbnRegex.IsMatch(value))
-                {
+			set
+			{
+				if (!IsbnRegex.IsMatch(value))
+				{
+
 					throw new ArgumentException("The format of the isbn is not valid");
-                }
-                isbn = value; 
+				}
+				value = value.Replace("-", "");
+				isbn = value;
 			}
 		}
 
-		public Book(string title,string isbn, DateTime pubDate, IEnumerable<Author> authors)
+		public Book(string title, string isbn, DateTime pubDate, IEnumerable<Author> authors)
 		{
 			this.title = title;
 			this.Isbn = isbn;
 			this.PublicationDate = pubDate;
 			this.Authors = (authors ?? new List<Author>()).Distinct().ToList();
 		}
-        private Book()
-        {
-            
-        }
-    }
+		private Book()
+		{
+
+		}
+		public override bool Equals(object obj)
+		{
+			if (obj is Book otherBook)
+			{
+				return this.Title == otherBook.Title &&
+					   this.Isbn == otherBook.Isbn &&
+					   this.PublicationDate == otherBook.PublicationDate &&
+					   this.Authors.SequenceEqual(otherBook.Authors);
+			}
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			int hashCode = Title.GetHashCode() ^ Isbn.GetHashCode();
+			if (PublicationDate.HasValue)
+			{
+				hashCode ^= PublicationDate.Value.GetHashCode();
+			}
+			foreach (var author in Authors)
+			{
+				hashCode ^= author.GetHashCode();
+			}
+			return hashCode;
+		}
+	}
 }
