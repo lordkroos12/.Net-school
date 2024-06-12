@@ -1,16 +1,24 @@
-﻿using Task7.Interfaces;
+﻿using Task7.Factories;
+using Task7.Interfaces;
+using Task7.Repositories;
 
 namespace Task7.Enitites
 {
-    internal class Library
-    {
-        public Catalog Catalog { get; }
-        public List<string> PressReleaseItems { get; }
+	internal class Library
+	{
+		private Catalog _catalog;
+		private List<string> _pressReleaseItems;
+		// Constructor
+		public Library(AbstractFactory factory)
+		{
+			_catalog = factory.CreateCatalog();
+			_pressReleaseItems = factory.CreatePressItems();
+		}
 
-        public Library(Catalog catalog, List<string> pressReleaseItems)
-        {
-            Catalog = catalog ?? throw new ArgumentNullException("Catalog is null");
-            PressReleaseItems = pressReleaseItems ?? throw new ArgumentNullException("PressReleaseItems is null");
-        }
-    }
+		public Catalog GetCatalog()
+		{
+			return _catalog;
+		}
+
+	}
 }

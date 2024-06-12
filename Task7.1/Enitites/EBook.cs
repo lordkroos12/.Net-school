@@ -2,7 +2,8 @@
 
 namespace Task7.Enitites
 {
-    public class EBook : IBook
+	[Serializable]
+	public class EBook : IBook
     {
         private string title;
 
@@ -34,6 +35,6 @@ namespace Task7.Enitites
 
         }
 
-        public string GetKey() => InternetResourceIdentifier;
+        public  string GetKey() => InternetResourceIdentifier;
     }
 }

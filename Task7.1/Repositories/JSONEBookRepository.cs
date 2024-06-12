@@ -1,9 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Task7.Enitites;
+using Task7.Interfaces;
 
 namespace Task7.Repositories
 {
-	internal class JSONEBookRepository
+	internal class JSONEBookRepository : IRepository
 	{
 		public Catalog LoadCatalog(string filePath)
 		{

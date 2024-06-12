@@ -4,22 +4,23 @@ using Task7.Interfaces;
 
 namespace Task7.Repositories
 {
-	internal class XMLEbook
+	internal class XMLEbook : IRepository
 	{
 		public void SaveCatalog(Catalog catalog, string filePath)
 		{
-			var serializer = new XmlSerializer(typeof(Catalog));
+			var serializer = new XmlSerializer(typeof(List<EBook>));
 			using (var stream = new FileStream(filePath, FileMode.Create))
 			{
-				serializer.Serialize(stream, catalog);
+				var ebooks = catalog.GetAllEBooks();
+				serializer.Serialize(stream, ebooks);
 			}
 		}
-		public static Catalog LoadCatalog<PaperBook>(string filePath)
+		public  Catalog LoadCatalog(string filePath)
 		{
 			var serializer = new XmlSerializer(typeof(List<EBook>));
 			using (var stream = new FileStream(filePath, FileMode.Open))
 			{
-				var books = (List<IBook>)serializer.Deserialize(stream);
+				var books = (List<EBook>)serializer.Deserialize(stream);
 				var catalog = new Catalog();
 				foreach (var book in books)
 				{

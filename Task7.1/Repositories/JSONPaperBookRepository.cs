@@ -6,7 +6,7 @@ using Task7.Interfaces;
 
 namespace Task7.Repositories
 {
-	internal class JSONPaperBookRepository
+	internal class JSONPaperBookRepository: IRepository
 	{
 		public Catalog LoadCatalog(string filePath)
 		{

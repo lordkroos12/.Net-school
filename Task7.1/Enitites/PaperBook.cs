@@ -3,7 +3,8 @@ using Task7.Interfaces;
 
 namespace Task7.Enitites
 {
-    public class PaperBook : IBook
+	[Serializable]
+	public class PaperBook : IBook
     {
 		private string title;
 

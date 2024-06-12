@@ -11,7 +11,7 @@ namespace Task7
 	internal class GetCSVData
 	{
 
-		public static (Library PaperBook, Library Ebook) LoadLibrary(string path)
+		public static (Catalog PaperBook, Catalog Ebook, List<string> publishers,List<string> formats) LoadLibrary(string path)
 		{
 			var paperBooks = new List<PaperBook>();
 			var eBooks = new List<EBook>();
@@ -65,11 +65,7 @@ namespace Task7
 				{
 					eBookCatalog.AddBook(book);
 				}
-
-				var paperBook = new Library(paperBookCatalog, publishers);
-				var eBook = new Library(eBookCatalog, formats);
-
-				return (paperBook, eBook);
+				return (paperBookCatalog, eBookCatalog, publishers,formats);
 			}
 		}
 		private static List<Author> GetAuthorsFromCsv(string authorsString)

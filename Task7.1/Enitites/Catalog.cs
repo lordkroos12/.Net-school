@@ -7,7 +7,7 @@ namespace Task7.Enitites
     [Serializable]
     public class Catalog
     {
-        public Dictionary<string, IBook> catalog;
+		public Dictionary<string, IBook> catalog;
 
         public Catalog()
         {
@@ -35,6 +35,15 @@ namespace Task7.Enitites
         {
             return catalog.Values.Where(x => x.Authors.Contains(author));
         }
-        
+		public List<EBook> GetAllEBooks()
+		{
+			return catalog.Values.OfType<EBook>().ToList();
+		}
+		public List<PaperBook> GetAllPaperBooks()
+		{
+			return catalog.Values.OfType<PaperBook>().ToList();
+		}
+
+
 	}
 }
