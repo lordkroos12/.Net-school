@@ -1,8 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace Task5._2
 {
-	internal class Catalog
+	internal class Catalog : IEnumerable
 	{
 		private readonly Dictionary<string, Book> catalog;
 
@@ -49,6 +50,15 @@ namespace Task5._2
 			.GroupBy(author => author)
 			.Select(group => (Author: group.Key, BookCount: group.Count()))
 			.OrderBy(result => result.Author);
+		}
+		public IEnumerator<Book> GetEnumerator()
+		{
+			return catalog.Values.GetEnumerator();
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
 		}
 	}
 }
