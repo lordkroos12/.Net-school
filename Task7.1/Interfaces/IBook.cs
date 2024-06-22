@@ -7,5 +7,7 @@ namespace Task7.Interfaces
         public string Title { get; set; }
         public List<Author> Authors { get; set; }
         string GetKey();
+
+        const int limit= 200;
     }
 }

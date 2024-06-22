@@ -1,6 +1,4 @@
-﻿using System.Xml.Serialization;
-using Task7.DTOs;
-using Task7.Interfaces;
+﻿using Task7.Interfaces;
 
 namespace Task7.Enitites
 {

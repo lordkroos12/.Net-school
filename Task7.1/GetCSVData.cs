@@ -1,23 +1,16 @@
 ﻿using CsvHelper;
-using System.Data;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using Task7.DTOs;
 using Task7.Enitites;
-using Task7.Interfaces;
 
 namespace Task7
 {
 	internal class GetCSVData
 	{
 
-		public static (Catalog PaperBook, Catalog Ebook, List<string> publishers,List<string> formats) LoadLibrary(string path)
+		public static Catalog LoadPaperBookLibrary(string path)
 		{
 			var paperBooks = new List<PaperBook>();
-			var eBooks = new List<EBook>();
-			var publishers = new List<string>();
-			var formats = new List<string>();
-
 			using (StreamReader sr = new StreamReader(path))
 			{
 				using (var csv = new CsvReader(sr, CultureInfo.InvariantCulture))
@@ -42,7 +35,29 @@ namespace Task7
 							PaperBook pb = new PaperBook(title, isbns, publisher, date, authors);
 							paperBooks.Add(pb);
 						}
-						else
+					}
+				}
+				var paperBookCatalog = new Catalog();
+				foreach (var book in paperBooks)
+				{
+					paperBookCatalog.AddBook(book);
+				}
+				return paperBookCatalog;
+			}
+			
+		}
+		public static Catalog LoadEbookLibrary(string path)
+		{
+			var eBooks = new List<EBook>();
+			var formats = new List<string>();
+			using (StreamReader sr = new StreamReader(path))
+			{
+				using (var csv = new CsvReader(sr, CultureInfo.InvariantCulture))
+				{
+					var rows = csv.GetRecords<BookCsvDto>();
+					foreach (var record in rows)
+					{
+						if (!record.related.Contains("urn:isbn"))
 						{
 							List<Author> authors = GetAuthorsFromCsv(record.creator);
 							string title = record.title;
@@ -51,21 +66,63 @@ namespace Task7
 							EBook book = new EBook(title, identifier, formats, authors);
 							eBooks.Add(book);
 						}
-
 					}
 				}
-				var paperBookCatalog = new Catalog();
-				foreach (var book in paperBooks)
-				{
-					paperBookCatalog.AddBook(book);
-				}
+			}
+			var eBookCatalog = new Catalog();
+			foreach (var book in eBooks)
+			{
+				eBookCatalog.AddBook(book);
+			}
+			return eBookCatalog;
+		}
+		public static List<string> LoadFormats(string path)
+		{
+			var formats = new List<string>();
 
-				var eBookCatalog = new Catalog();
-				foreach (var book in eBooks)
+			using (StreamReader sr = new StreamReader(path))
+			{
+				using (var csv = new CsvReader(sr, CultureInfo.InvariantCulture))
 				{
-					eBookCatalog.AddBook(book);
+					var rows = csv.GetRecords<BookCsvDto>();
+					foreach (var record in rows)
+					{
+						if (!record.related.Contains("urn:isbn"))
+						{
+							var format = record.format.Split(",").ToList();
+							foreach (var item in format)
+							{
+								if (!formats.Contains(item))
+								{
+									formats.Add(item);
+								}
+								
+							}
+						}
+					}
+				}			
+				return  formats;
+			}
+		}
+		public static List<string> LoadPublishers(string path)
+		{
+			var publishers = new List<string>();
+
+			using (StreamReader sr = new StreamReader(path))
+			{
+				using (var csv = new CsvReader(sr, CultureInfo.InvariantCulture))
+				{
+					var rows = csv.GetRecords<BookCsvDto>();
+					foreach (var record in rows)
+					{
+						if (record.related.Contains("urn:isbn"))
+						{
+							string publisher = record.publisher;
+							publishers.Add(publisher);
+						}
+					}
 				}
-				return (paperBookCatalog, eBookCatalog, publishers,formats);
+				return publishers;
 			}
 		}
 		private static List<Author> GetAuthorsFromCsv(string authorsString)

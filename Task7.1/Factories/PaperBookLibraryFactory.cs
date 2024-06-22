@@ -1,5 +1,4 @@
 ﻿using Task7.Enitites;
-using Task7.Interfaces;
 
 namespace Task7.Factories
 {
@@ -13,13 +12,13 @@ namespace Task7.Factories
         }
         public override Catalog CreateCatalog()
         {
-            var (PaperBookLibrary, _, _, _) = GetCSVData.LoadLibrary(Path);
+            var PaperBookLibrary = GetCSVData.LoadPaperBookLibrary(Path);
             return PaperBookLibrary;
         }
 
         public override List<string> CreatePressItems()
         {
-            var (_, _, publishers, _) = GetCSVData.LoadLibrary(Path);
+            var publishers = GetCSVData.LoadPublishers(Path);
             return publishers;
         }
     }

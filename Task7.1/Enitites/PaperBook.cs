@@ -6,6 +6,7 @@ namespace Task7.Enitites
 	[Serializable]
 	public class PaperBook : IBook
     {
+        const int limit = 200;
 		private string title;
 
         public string Title
@@ -13,7 +14,7 @@ namespace Task7.Enitites
             get { return title; }
             set
             {
-                if (value.Length > 200)
+                if (value.Length > limit)
                 {
                     throw new ArgumentException("Length must be less than 200 symbols!");
                 }
@@ -28,7 +29,7 @@ namespace Task7.Enitites
             get { return publisher; }
             set
             {
-                if (value.Length > 200)
+                if (value.Length > limit)
                 {
                     throw new ArgumentException("Length must be less than 200 symbols!");
                 }
